@@ -17,6 +17,7 @@ import com.valdoc.entity.AHU;
 import com.valdoc.entity.Area;
 import com.valdoc.entity.Plant;
 import com.valdoc.entity.Role;
+import com.valdoc.entity.Room;
 import com.valdoc.exception.DaoException;
 import com.valdoc.exception.ValdocException;
 import com.valdoc.util.UtilityService;
@@ -124,8 +125,22 @@ public class AreaServiceImpl implements AreaService {
 
 	@Override
 	public void update(AreaDTO areaDTO) throws ValdocException {
-		// TODO Auto-generated method stub
+		try {
+		Area area = new Area();
 		
+		area.setAreaId(areaDTO.getAreaId());
+		area.setAreaName(areaDTO.getAreaName());
+		area.setAdditionalDetails(areaDTO.getAdditionalDetails());
+		area.setPlant(getRoleObjById(areaDTO.getPlant().getPlantId()));
+		
+		dao.update(area);
+	} catch (DaoException ex) {
+		logger.error("AreaServiceImpl.updateArea() " + ex);
+		throw new DaoException(ex.getMessage());
+	} catch (Exception ex) {
+		logger.error("AreaServiceImpl.updateArea() " + ex);
+		throw new ValdocException(ex.getMessage());
+	}
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class AhuServiceImpl implements AhuService {
 				for (AHU ahu : ahus) {
 					AhuDTO ahuDTO = new AhuDTO();
 					ahuDTO.setAhuId(ahu.getAhuId());
+					ahuDTO.setAhuNo(ahu.getAhuNo());
 					ahuDTO.setAhuType(ahu.getAhuType());
 					ahuDTO.setCapacity(ahu.getCapacity());
 					ahuDTO.setReturnAirCFM(ahu.getReturnAirCFM());
@@ -73,6 +74,7 @@ public class AhuServiceImpl implements AhuService {
 			
 			if (null != ahu) {
 				ahuDTO.setAhuId(ahu.getAhuId());
+				ahuDTO.setAhuNo(ahu.getAhuNo());
 				ahuDTO.setAhuType(ahu.getAhuType());
 				ahuDTO.setCapacity(ahu.getCapacity());
 				ahuDTO.setReturnAirCFM(ahu.getReturnAirCFM());
@@ -110,6 +112,7 @@ public class AhuServiceImpl implements AhuService {
 		try {
 
 			AHU ahu = new AHU();
+			ahu.setAhuNo(ahuDTO.getAhuNo());
 			ahu.setAhuType(ahuDTO.getAhuType());
 			ahu.setCapacity(ahuDTO.getCapacity());
 			ahu.setReturnAirCFM(ahuDTO.getReturnAirCFM());
@@ -149,6 +152,7 @@ public class AhuServiceImpl implements AhuService {
 			if (ahuDTO != null) {
 
 				ahu.setAhuId(ahuDTO.getAhuId());
+				ahu.setAhuNo(ahuDTO.getAhuNo());
 				ahu.setAhuType(ahuDTO.getAhuType());
 				ahu.setCapacity(ahuDTO.getCapacity());
 				ahu.setReturnAirCFM(ahuDTO.getReturnAirCFM());

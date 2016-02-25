@@ -26,6 +26,9 @@ public class AHU implements Serializable{
 	@Column(name="ahuId")
 	private Integer ahuId;
 	
+	@Column(name="ahuNo")
+	private String ahuNo;
+	
 	@Column(name="ahuType")
 	private String ahuType;
 	
@@ -87,6 +90,14 @@ public class AHU implements Serializable{
 
 	public void setAhuId(Integer ahuId) {
 		this.ahuId = ahuId;
+	}
+
+	public String getAhuNo() {
+		return ahuNo;
+	}
+
+	public void setAhuNo(String ahuNo) {
+		this.ahuNo = ahuNo;
 	}
 
 	public String getAhuType() {
@@ -235,9 +246,9 @@ public class AHU implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AHU [ahuId=" + ahuId + ", ahuType=" + ahuType + ", capacity=" + capacity + ", returnAirCFM="
-				+ returnAirCFM + ", exhaustAirCFM=" + exhaustAirCFM + ", bleedFilterType=" + bleedFilterType
-				+ ", bleedFilterEfficiency=" + bleedFilterEfficiency + ", bleedAirCFM=" + bleedAirCFM
+		return "AHU [ahuId=" + ahuId + ", ahuNo=" + ahuNo + ", ahuType=" + ahuType + ", capacity=" + capacity
+				+ ", returnAirCFM=" + returnAirCFM + ", exhaustAirCFM=" + exhaustAirCFM + ", bleedFilterType="
+				+ bleedFilterType + ", bleedFilterEfficiency=" + bleedFilterEfficiency + ", bleedAirCFM=" + bleedAirCFM
 				+ ", bleedFilterQty=" + bleedFilterQty + ", bleedFilterSize=" + bleedFilterSize + ", freshFilterType="
 				+ freshFilterType + ", freshAirCFM=" + freshAirCFM + ", freshFilterQty=" + freshFilterQty
 				+ ", freshFilterSize=" + freshFilterSize + ", ahuHEPAFilterQty=" + ahuHEPAFilterQty
@@ -251,6 +262,7 @@ public class AHU implements Serializable{
 		int result = 1;
 		result = prime * result + ((ahuHEPAFilterQty == null) ? 0 : ahuHEPAFilterQty.hashCode());
 		result = prime * result + ((ahuId == null) ? 0 : ahuId.hashCode());
+		result = prime * result + ((ahuNo == null) ? 0 : ahuNo.hashCode());
 		result = prime * result + ((ahuType == null) ? 0 : ahuType.hashCode());
 		result = prime * result + ((bleedAirCFM == null) ? 0 : bleedAirCFM.hashCode());
 		result = prime * result + ((bleedFilterEfficiency == null) ? 0 : bleedFilterEfficiency.hashCode());
@@ -289,6 +301,11 @@ public class AHU implements Serializable{
 			if (other.ahuId != null)
 				return false;
 		} else if (!ahuId.equals(other.ahuId))
+			return false;
+		if (ahuNo == null) {
+			if (other.ahuNo != null)
+				return false;
+		} else if (!ahuNo.equals(other.ahuNo))
 			return false;
 		if (ahuType == null) {
 			if (other.ahuType != null)
@@ -377,5 +394,4 @@ public class AHU implements Serializable{
 			return false;
 		return true;
 	}
-
 }

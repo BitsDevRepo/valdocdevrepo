@@ -161,12 +161,27 @@ body {
 								onclick="switchTab('room')"><i class="fa fa-home"></i><span>&nbsp;&nbsp;Manage
 										Room</span></a></li>
 							<li class="tab "><a class="ajax-link"
-								onclick="switchTab('ahu')"><i class="fa fa-television"></i><span>&nbsp;&nbsp;Manage
+								onclick="switchTab('ahu')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Manage
 									AHU</span></a></li>
 									
 							<li class="tab "><a class="ajax-link"
-								onclick="switchTab('area')"><i class="fa fa-television"></i><span>&nbsp;&nbsp;Manage
+								onclick="switchTab('area')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Manage
 									Area</span></a></li>
+									
+							<li class="tab "><a class="ajax-link"
+								onclick="switchTab('roomFilter')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Manage
+									Room Filter</span></a></li>
+									
+							<li class="tab "><a class="ajax-link"
+								onclick="switchTab('roomFilter/grill')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Manage Grill
+								</span></a></li>
+							
+							<li class="tab "><a class="ajax-link"
+								onclick="switchTab('room/applicabletestroom')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Applicable
+										Test Room</span></a></li>
+							
+							<li class="tab "><a class="ajax-link"
+								onclick="switchTab('clientInstrument')"><i class="fa fa-wrench"></i><span>&nbsp;&nbsp;Manage Client Instrument</span></a></li>
 						</ul>
 					</div>
 

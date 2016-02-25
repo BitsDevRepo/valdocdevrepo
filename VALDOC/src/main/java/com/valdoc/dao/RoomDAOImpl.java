@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.valdoc.entity.AHU;
+import com.valdoc.entity.ApplicableTestRoom;
 import com.valdoc.entity.Area;
-import com.valdoc.entity.Plant;
 import com.valdoc.entity.Room;
 import com.valdoc.exception.DaoException;
 
@@ -44,7 +44,6 @@ public class RoomDAOImpl implements RoomDAO {
 	}
 
 	@Override
-	@Transactional
 	public void update(Room room) throws DaoException {
 		try {
 			manager.merge(room);
@@ -52,12 +51,10 @@ public class RoomDAOImpl implements RoomDAO {
 			logger.debug(" Failed To update. " + ex);
 			throw new DaoException("Exception in RoomDAOImpl " + ex);
 		}
-
 		
 	}
 
 	@Override
-	@Transactional
 	public void delete(Integer id) throws DaoException {
 		try {
 			Room room = getObject(id);
@@ -144,6 +141,118 @@ public class RoomDAOImpl implements RoomDAO {
 		} catch (Exception ex) {
 			logger.debug(" Failed SQL!AhuDAOImpl in  getUserDetails() " + ex);
 			throw new DaoException("Exception in AhuDAOImpl in getUserDetails() " + ex);
+		}
+	}
+
+	//Operations for ApplicableTestRoom
+
+
+	@Override
+	public List<ApplicableTestRoom> getApplicableTestRoomDetails() throws DaoException {
+		try {
+			List<ApplicableTestRoom> roomFilterList = manager.createQuery("Select u From ApplicableTestRoom u", ApplicableTestRoom.class).getResultList();
+			return roomFilterList;
+		} catch (Exception ex) {
+			logger.debug(" Failed SQL!RoomDAOImpl in  getApplicableTestRoomDetails() " + ex);
+			throw new DaoException("Exception in RoomDAOImpl in getApplicableTestRoomDetails() " + ex);
+		}	
+
+	}
+
+
+	@Override
+	public void saveApplicableTestRoomDetails(ApplicableTestRoom applicableTestRoom) throws DaoException {
+		try {
+			manager.persist(applicableTestRoom);
+		} catch (Exception ex) {
+			logger.debug(" Failed To Add ApplicableTestRoomDetails. " + ex);
+			throw new DaoException("Exception in RoomImpl in saveApplicableTestRoomDetails" + ex);
+		}
+
+	}
+
+
+	@Override
+	public Room getRoomObject(Integer roomId) throws DaoException {
+		try {
+			Room room = manager.createNamedQuery("Room.findById", Room.class).setParameter("roomId", roomId).getSingleResult();
+			if (room.getRoomId() == null) {
+				return null; 
+			} else {
+				return room;
+			}
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception ex) {
+			logger.debug(" Failed SQL! getRoomFilterObject " + ex);
+			throw new DaoException("Exception  for getRoomFilterObject()" + ex);
+		}
+	}
+
+
+	@Override
+	public void updateApplicableTestRoomDetails(ApplicableTestRoom applicableTestRoom) throws DaoException {
+		try {
+			manager.merge(applicableTestRoom);
+		} catch (Exception ex) {
+			logger.debug(" Failed To Update ApplicableTestRoomDetails. " + ex);
+			throw new DaoException("Exception in RoomImpl in updateApplicableTestRoomDetails" + ex);
+		}
+	}
+		
+
+
+	@Override
+	public void deleteApplicableTestRoomDetails(ApplicableTestRoom applicableTestRoom) throws DaoException {
+		try{			
+			manager.remove(manager.contains(applicableTestRoom) ? applicableTestRoom : manager.merge(applicableTestRoom));
+			}catch(Exception ex)
+			{
+				logger.debug(" Failed To Delete ApplicableTestRoomDetails. " + ex);
+				throw new DaoException("Exception in RoomDAOImpl in deleteApplicableTestRoomDetails" + ex);
+			}
+	
+	}
+
+
+	@Override
+	public List<Room> getRoomId() throws DaoException {
+		try {
+			List<Room> roomEntityList = manager.createQuery("Select r From Room r", Room.class).getResultList();
+			return roomEntityList;
+		} catch (Exception ex) {
+			logger.debug(" Failed SQL!RoomDAOImpl in  getRoomDetails() " + ex);
+			throw new DaoException("Exception in RoomDAOImpl in getRoomDetails() " + ex);
+		}
+	}
+
+
+	@Override
+	public ApplicableTestRoom getObjectApplicableTestRoom(Integer id) throws DaoException {
+		try {
+			ApplicableTestRoom applicableTestRoom = manager.createNamedQuery("ApplicableTestRoom.findById", ApplicableTestRoom.class).setParameter("aplicableTestId", id).getSingleResult();
+			if (applicableTestRoom.getAplicableTestId() == null) {
+				return null;
+			} else {
+				return applicableTestRoom;
+			}
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception ex) {
+			logger.debug(" Failed SQL! getObjectApplicableTestRoom " + ex);
+			throw new DaoException("Exception  for getObjectApplicableTestRoom()" + ex);
+		}
+	}
+
+
+	@Override
+	public List<Area> getAreaDetails() throws DaoException {
+		try {
+			List<Area> areaEntityList = manager.createQuery("Select ar From Area ar", Area.class).getResultList();
+			return areaEntityList;
+		} catch (Exception ex) {
+			logger.debug(" Failed SQL!RoomDAOImpl in  getAreaDetails() " + ex);
+			throw new DaoException("Exception in RoomDAOImpl in getAreaDetails() " + ex);
 		}
 	}
 

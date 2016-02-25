@@ -21,8 +21,6 @@
 	<div class="form-group" style="padding: 10px;">
 		<div class="col-xs-12 col-sm-12  col-md-12  col-lg-12 ">
 
-
-
 			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
 				<label>Area Name</label> <input type="text" class="form-control" placeholder="Enter Your Area Name"
 					id="areaName" value="" title="Area name">
@@ -40,6 +38,36 @@
 			onClick="cancelAdd();">Cancel</button>
 		<button type="submit" class="btn btn-primary addBtn"
 			onClick="saveMe()">Save</button>
+		<div>&nbsp;</div>
+	</div>
+</div>
+
+<div class="editUser-content hide">
+	<div class="form-group" style="padding: 10px;">
+		<div class="col-xs-12 col-sm-12  col-md-12  col-lg-12 ">
+
+			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
+				<label>Id</label> <input type="text" class="form-control" disabled="disabled"
+					id="editareaId" value="" title="Area Id">
+			</div>
+			
+			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
+				<label>Area Name</label> <input type="text" class="form-control" placeholder="Enter Your Area Name"
+					id="editareaName" value="" title="Area name">
+			</div>
+
+			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
+				<label>Additional Details</label> <input type="text" class="form-control" placeholder="Enter AdditionalDetails"
+					id="editadditionalDetails" value="" title="Additional Details">
+					<input type="hidden" id="editpid" value="1">
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-offset-10 col-xs-offset-2" style="margin-top: 20px;">
+		<button type="reset" class="btn btn-primary cancelBtn"
+			onClick="cancelEdit();">Cancel</button>
+		<button type="submit" class="btn btn-primary editBtn"
+			onClick="editArea();">Save</button>
 		<div>&nbsp;</div>
 	</div>
 </div>
@@ -76,20 +104,20 @@
 	}
 
 	function drawRow(rowData) {
-		var row = $("<tr class='user_"+rowData.id+"'/>")
+		var row = $("<tr class='area_"+rowData.areaId+"'/>")
 		$("#areaTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
 
 		//alert(JSON.stringify(rowData));
-		row.append($("<td  class='id_"+rowData.id+"'>" + rowData.areaId + "</td>"));
-		row.append($("<td class='name_"+rowData.id+"' >" + rowData.areaName
+		row.append($("<td  class='areaId_"+rowData.areaId+"'>" + rowData.areaId + "</td>"));
+		row.append($("<td class='areaName_"+rowData.areaId+"' >" + rowData.areaName
 				+ "</td>"));
-		row.append($("<td class='type_"+rowData.id+"'>" + rowData.additionalDetails
+		row.append($("<td class='additionalDetails_"+rowData.areaId+"'>" + rowData.additionalDetails
 				+ "</td>"));
 
-		row.append($("<td class='type_"+rowData.id+"'>" + rowData.createdDate
+		row.append($("<td class='createdDate_"+rowData.areaId+"'>" + rowData.createdDate
 				+ "</td>"));
 		row
-				.append($("<td class='tdBtn_"+rowData.id+"'><span><a id='editBtn_"
+				.append($("<td class='tdBtn_"+rowData.areaId+"'><span><a id='editBtn_"
 						+ rowData.areaId
 						+ "'  class='btn btn-info tdBtnEdit_"
 						+ rowData.areaId
@@ -135,6 +163,7 @@
 		$('.add-user-container').hide();
 		$('.box-content').addClass('hide');
 		$('.addUser-content').removeClass('hide');
+		errorCount=0;
 
 		var urlPerfix = fetchBackendUrl("config");
 		var urlMapping = urlPerfix + '/area' + "/" + 'create';
@@ -145,49 +174,122 @@
 		var additionalDetails = $('#additionalDetails').val();
 		var pid=$('#pid').val();
 		//alert("New Values : "+areaName+"  : "+additionalDetails +"  : "+pid);
+		if (validate("areaName", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		
+	if(errorCount<1)
+		{
+			errorCount=0;
 		plant["plantId"]=pid;
 		areas["plant"]=plant;
 		areas["areaName"] = areaName;
 		areas["additionalDetails"] = additionalDetails;
 		callAjaxPostJSON(urlMapping, "POST", "", areas);
+		$.growl({
+			title : "Status",
+			message : "Successfully Added!"
+		});
+		setInterval('refreshPage()', 500);
+		}
 	}
 
 	function updateMe(elem) {
-
-		//	var elemSelected = $(elem).attr('id');
-		//	alert("updatekMe id : " + elemSelected);
-		//	var rowNum = elemSelected.split('_')[1];
-		//	var id = elemSelected.split('_')[2];
-		//	var gname = elemSelected.split('_')[3];
-		//	var rpmMapId = elemSelected.split('_')[4];
-
-		var urlPerfix = fetchBackendUrl("config");
-		var urlMapping = urlPerfix + '/area' + "/" + 'update';
-		var areas = {};
 		
-		users["id"] = 1;
-		users["name"] = "fjfj";
-		users["email"] = "Aryans";
-		users["password"] = "Aryans";
-
-		role["id"] = 1;
-		role["userType"] = "abc";
-		permission["id"] = 1;
-		permission["name"] = "xyz";
-		users["userRole"] = role;
-		role["permission"] = permission;
-		callAjaxPostJSON(urlMapping, "POST", "", areas);
+		$('.add-user-container').hide();
+		$('.box-content').addClass('hide');
+		$('.editUser-content').removeClass('hide');
+		
+		
+		var elemSelected = $(elem).attr('id');
+		var id = elemSelected.split('_')[1];
+		
+		var areaId = $('.areaId_' + id).text();
+		var areaName = $('.areaName_' + id).text();
+		var additionalDetails = $('.additionalDetails_' + id).text();
+		
+		$('#editareaId').val(areaId);
+		$('#editareaName').val(areaName);
+		$('#editadditionalDetails').val(additionalDetails);
 
 	}
 
 	function deleteMe(elem) {
-		var elemSelected = $(elem).attr('id');
+		try{
+			var elemSelected = $(elem).attr('id');
 		
-		var rowNum = elemSelected.split('_')[1];
+			var rowNum = elemSelected.split('_')[1];
+			var urlPerfix = fetchBackendUrl("config");
+			var urlMapping = urlPerfix + '/area' + "/" + 'delete';
+			var areas = {};
+			areas["areaId"] = parseInt(rowNum);
+			callAjaxPostJSON(urlMapping, "POST", "", areas);
+			$.growl({
+				title : "Status",
+				message : "Successfully Deleted!"
+			});
+			setInterval('refreshPage()', 500);
+			}catch(err){
+				$.growl({
+				title : "Status",
+				message : "Could not delete!"
+			});
+			setInterval('refreshPage()', 500);
+			}
+	}
+	function cancelEdit() {
+		$('.box-content').removeClass('hide');
+		$('.editUser-content').addClass('hide');
+		$('.add-user-container').show();
+		
+	}
+
+	function editArea(){
+	
+		errorCount=0;
 		var urlPerfix = fetchBackendUrl("config");
-		var urlMapping = urlPerfix + '/area' + "/" + 'delete';
+		var urlMapping = urlPerfix + '/area' + "/" + 'update';
+		
 		var areas = {};
-		areas["areaId"] = parseInt(rowNum);
-		callAjaxPostJSON(urlMapping, "POST", "", areas);
+		var plant={};
+	    
+		var pid=$('#editpid').val();
+		var areaId= $('#editareaId').val();
+		var areaName = $('#editareaName').val();
+		var additionalDetails = $('#editadditionalDetails').val();
+		
+		if (validate("editareaId", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editareaName", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		
+		if(errorCount<1){
+			try{		
+			errorCount=0;
+			plant["plantId"]=pid;
+			areas["plant"]=plant;			
+			areas["areaId"] = areaId;
+			areas["areaName"] = areaName;
+			areas["additionalDetails"] = additionalDetails;
+			callAjaxPostJSON(urlMapping, "POST", "", areas);
+			$.growl({
+				title : "Status",
+				message : "Successfully updated!"
+			});
+			setInterval('refreshPage()', 500);
+			}catch(err)
+			{
+				$.growl({
+				title : "Status",
+				message : "Unsuccessful!"
+			});
+			setInterval('refreshPage()', 500);
+			}
+			}
 	}
 </script>

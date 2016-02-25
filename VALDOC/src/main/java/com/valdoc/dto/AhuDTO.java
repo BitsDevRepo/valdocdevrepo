@@ -11,6 +11,8 @@ public class AhuDTO implements Serializable{
 	
 	private Integer ahuId;
 	
+	private String ahuNo;
+	
 	private String ahuType;
 	
 	private Double capacity;
@@ -53,6 +55,14 @@ public class AhuDTO implements Serializable{
 
 	public void setAhuId(Integer ahuId) {
 		this.ahuId = ahuId;
+	}
+
+	public String getAhuNo() {
+		return ahuNo;
+	}
+
+	public void setAhuNo(String ahuNo) {
+		this.ahuNo = ahuNo;
 	}
 
 	public String getAhuType() {
@@ -201,14 +211,14 @@ public class AhuDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AhuDTO [ahuId=" + ahuId + ", ahuType=" + ahuType + ", capacity=" + capacity + ", returnAirCFM="
-				+ returnAirCFM + ", exhaustAirCFM=" + exhaustAirCFM + ", bleedFilterType=" + bleedFilterType
-				+ ", bleedFilterEfficiency=" + bleedFilterEfficiency + ", bleedAirCFM=" + bleedAirCFM
+		return "AhuDTO [ahuId=" + ahuId + ", ahuNo=" + ahuNo + ", ahuType=" + ahuType + ", capacity=" + capacity
+				+ ", returnAirCFM=" + returnAirCFM + ", exhaustAirCFM=" + exhaustAirCFM + ", bleedFilterType="
+				+ bleedFilterType + ", bleedFilterEfficiency=" + bleedFilterEfficiency + ", bleedAirCFM=" + bleedAirCFM
 				+ ", bleedFilterQty=" + bleedFilterQty + ", bleedFilterSize=" + bleedFilterSize + ", freshFilterType="
 				+ freshFilterType + ", freshAirCFM=" + freshAirCFM + ", freshFilterQty=" + freshFilterQty
 				+ ", freshFilterSize=" + freshFilterSize + ", ahuHEPAFilterQty=" + ahuHEPAFilterQty
 				+ ", hepaFilterEfficiency=" + hepaFilterEfficiency + ", hepaParticleSize=" + hepaParticleSize
 				+ ", hepaFilterSpecification=" + hepaFilterSpecification + ", creationDate=" + creationDate + "]";
 	}
-	
+
 }
