@@ -41,12 +41,12 @@ public class RoomServiceImpl implements RoomService {
 		try {
 			List<Room> rooms = dao.getRoomDetails();
 			if (rooms != null && rooms.size() > 0) {
-
-				AhuDTO ahuDTO=new AhuDTO();
-				AreaDTO areaDTO=new AreaDTO();
 				
 				for (Room room : rooms) {
 					RoomDTO roomDTO = new RoomDTO();
+					AhuDTO ahuDTO=new AhuDTO();
+					AreaDTO areaDTO=new AreaDTO();
+					
 					roomDTO.setRoomId(room.getRoomId());
 					
 					ahuDTO.setAhuId(room.getAhu().getAhuId());
@@ -316,11 +316,11 @@ public class RoomServiceImpl implements RoomService {
 		try {
 			List<ApplicableTestRoom> applicableTestRooms = dao.getApplicableTestRoomDetails();
 			List<ApplicableTestRoomDTO> applicableTestRoomDTOs = new ArrayList<ApplicableTestRoomDTO>();
-			RoomDTO roomDTO=new RoomDTO();
 			
 			if (applicableTestRooms != null && applicableTestRooms.size() > 0) {
 				for (ApplicableTestRoom applicableTestRoom : applicableTestRooms) {
 					ApplicableTestRoomDTO applicableTestRoomDTO = new ApplicableTestRoomDTO();
+					RoomDTO roomDTO=new RoomDTO();
 					
 					applicableTestRoomDTO.setAplicableTestId(applicableTestRoom.getAplicableTestId());
 					applicableTestRoomDTO.setCreationDate(UtilityService.dateToString(applicableTestRoom.getCreationDate()));

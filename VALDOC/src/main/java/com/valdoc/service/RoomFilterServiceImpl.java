@@ -36,13 +36,12 @@ public class RoomFilterServiceImpl implements RoomFilterService {
 		try {
 			List<RoomFilter> roomFilters = dao.getRoomFilterDetails();
 			if (roomFilters != null && roomFilters.size() > 0) {
-
-				RoomDTO roomDTO=new RoomDTO();
 				
 				for (RoomFilter roomFilter : roomFilters) {
 					RoomFilterDTO roomFilterDTO = new RoomFilterDTO();
-					roomFilterDTO.setFilterId(roomFilter.getFilterId());
+					RoomDTO roomDTO=new RoomDTO();
 					
+					roomFilterDTO.setFilterId(roomFilter.getFilterId());
 					roomDTO.setRoomId(roomFilter.getRoomId().getRoomId());
 					roomDTO.setRoomName(roomFilter.getRoomId().getRoomName());
 					roomFilterDTO.setRoom(roomDTO);
@@ -227,11 +226,10 @@ public class RoomFilterServiceImpl implements RoomFilterService {
 	try {
 		List<Grill> grills = dao.getGrillDetails();
 		if (grills != null && grills.size() > 0) {
-
-			RoomDTO roomDTO=new RoomDTO();
-			
+		
 			for (Grill grill : grills) {
 				GrillDTO grillDTO = new GrillDTO();
+				RoomDTO roomDTO=new RoomDTO();
 				grillDTO.setGrillId(grill.getGrillId());
 				
 				roomDTO.setRoomId(grill.getRoomId().getRoomId());
