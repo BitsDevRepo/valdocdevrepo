@@ -20,7 +20,7 @@ public class GrillDTO implements Serializable {
 	
 	private Double effectiveArea;  
 	
-	private boolean isSupplyGrill;  
+	private boolean supplyGrill;  
 	
 	private boolean additionalDetail;
 
@@ -83,11 +83,11 @@ public class GrillDTO implements Serializable {
 	}
 
 	public boolean isSupplyGrill() {
-		return isSupplyGrill;
+		return supplyGrill;
 	}
 
-	public void setSupplyGrill(boolean isSupplyGrill) {
-		this.isSupplyGrill = isSupplyGrill;
+	public void setSupplyGrill(boolean supplyGrill) {
+		this.supplyGrill = supplyGrill;
 	}
 
 	public boolean isAdditionalDetail() {
@@ -110,7 +110,8 @@ public class GrillDTO implements Serializable {
 	public String toString() {
 		return "GrillDTO [grillId=" + grillId + ", grillCode=" + grillCode + ", room=" + room + ", width=" + width
 				+ ", length=" + length + ", grillArea=" + grillArea + ", effectiveArea=" + effectiveArea
-				+ ", isSupplyGrill=" + isSupplyGrill + ", additionalDetail=" + additionalDetail + ", creationDate="
+				+ ", supplyGrill=" + supplyGrill + ", additionalDetail=" + additionalDetail + ", creationDate="
 				+ creationDate + "]";
 	}
+	
 }

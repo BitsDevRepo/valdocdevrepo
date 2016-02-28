@@ -264,7 +264,22 @@ function cal1(){
 			drawRow(data[i]);
 		}
 	}
-//rowData.userRole.userType
+	
+	function switchTab(tabClicked) {
+		var container = "box-inner";
+		var newurl = "";
+		if (tabClicked == "") {
+			if (url != "ERROR") {
+				newurl = url + "/" + "underconstruction";
+			}
+		} else {
+			if (url != "ERROR") {
+				newurl = url + "/" + tabClicked + "/view";
+			}
+		}
+		callAjax(newurl, container, "GET");
+	}
+
 	function drawRow(rowData) {
 		var row = $("<tr class='roomFilter_"+rowData.filterId+"'/>")
 		$("#roomFilter").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
@@ -437,7 +452,8 @@ function cal1(){
 			title : "Status",
 			message : "Successfully Added!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('roomFilter');
 		}
 	}
 	
@@ -492,13 +508,15 @@ function cal1(){
 			title : "Status",
 			message : "Successfully Deleted!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('roomFilter');
 		}catch(err){
 			$.growl({
 			title : "Status",
 			message : "Could not delete!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('roomFilter');
 		}
 }
 function cancelEdit() {
@@ -600,14 +618,16 @@ function editRoom(){
 			title : "Status",
 			message : "Successfully updated!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('roomFilter');
 		}catch(err)
 		{
 			$.growl({
 			title : "Status",
 			message : "Unsuccessful!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('roomFilter');
 		}
 	}
 }

@@ -228,7 +228,30 @@ $.each(roomData, function(key1, val1){
 
 			}
 		});
+
+		$(".popconfirm").popConfirm({
+			title : "Are you sure?",
+			content : "",
+			placement : "right",
+			container : false
+		});
+
 	});
+function switchTab(tabClicked) {
+			var container = "box-inner";
+			var newurl = "";
+			if (tabClicked == "") {
+				if (url != "ERROR") {
+					newurl = url + "/" + "underconstruction";
+				}
+			} else {
+				if (url != "ERROR") {
+					newurl = url + "/" + tabClicked + "/view";
+				}
+			}
+			callAjax(newurl, container, "GET");
+
+		}
 	
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='grillId'>Id</th><th class='grillCode'>Grill Id</th><th class='roomId'>Room Name</th><th class='width'>Width(ft)</th><th class='length'>Lenth(ft)</th><th class='grillArea'>Grill Area(Ft2)</th><th class='effectiveArea'>Effective Grill Area 75% (Ft2)</th><th class='creationDate'>Created Date</th><th class='op'>Operation</th></tr></thead>";
@@ -370,13 +393,15 @@ $.each(roomData, function(key1, val1){
 			rts["additionalDetail"] = additionalDetail;
 			rts["grillArea"] = grillArea;
 			rts["effectiveArea"] = effectiveArea;
-			rts["isSupplyGrill"] = isSupplyGrill;
+			rts["supplyGrill"] = isSupplyGrill;
 			callAjaxPostJSON(urlMapping, "POST", "", rts);
 			$.growl({
 				title : "Status",
 				message : "Successfully Added!"
 			});
-			setInterval('refreshPage()', 500);
+			//setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('roomFilter/grill');
 		}
 		
 	}
@@ -411,6 +436,7 @@ $.each(roomData, function(key1, val1){
 	}
 
 	function deleteMe(elem) {
+		try{
 		var elemSelected = $(elem).attr('id');
 		var rowNum = elemSelected.split('_')[1];
 		
@@ -419,6 +445,20 @@ $.each(roomData, function(key1, val1){
 		var grills = {};
 		grills["grillId"] = parseInt(rowNum);
 		callAjaxPostJSON(urlMapping, "POST", "", grills);
+			$.growl({
+				title : "Status",
+				message : "Successfully Deleted!"
+			});
+			setInterval(50000);
+			switchTab('roomFilter/grill');
+			}catch(err){
+				$.growl({
+				title : "Status",
+				message : "Could not delete!"
+			});
+			setInterval(50000);
+			switchTab('roomFilter/grill');
+			}
 }
 
 	function editEquipment(){
@@ -481,21 +521,23 @@ $.each(roomData, function(key1, val1){
 			grills["length"] = length;
 			grills["grillArea"] = grillArea;
 			grills["effectiveArea"] = effectiveArea;
-			grills["isSupplyGrill"] = isSupplyGrill;
+			grills["supplyGrill"] = isSupplyGrill;
 			grills["additionalDetail"] = additionalDetail;
 			callAjaxPostJSON(urlMapping, "POST", "", grills);
 			$.growl({
 				title : "Status",
 				message : "Successfully updated!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('roomFilter/grill');
 			}catch(err)
 			{
 				$.growl({
 				title : "Status",
 				message : "Unsuccessful!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('roomFilter/grill');
 			}
 		}
 	}

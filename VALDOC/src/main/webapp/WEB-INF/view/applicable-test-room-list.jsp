@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="box-header well" style="border-radius: 0px;">
-	<h2>Valdoc/Equipment/Applicable Test Room</h2>
+	<h2>Valdoc/Room/Applicable Test Room</h2>
 </div>
 <div style="border-bottom: 1px solid #cbcbcb; margin: 10px; padding-bottom: 10px; padding-top: 10px;"
 	class="add-user-container">
@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
-				<label>Location</label> <input type="number" class="form-control" placeholder="e.g. 10"
+				<label>Location</label> <input type="text" class="form-control" placeholder="e.g. bangalore"
 					id="location" value="" title="Location" >
 			</div>
 
@@ -75,7 +75,7 @@
 			</div>
 
 			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 nopadding">
-				<label>Location</label> <input type="number" class="form-control"
+				<label>Location</label> <input type="text" class="form-control"
 					id="editLocation" value="" title="Location" >
 			</div>
 			
@@ -161,6 +161,21 @@ $.each(roomData, function(key1, val1){
 		});
 
 	});
+	
+	function switchTab(tabClicked) {
+		var container = "box-inner";
+		var newurl = "";
+		if (tabClicked == "") {
+			if (url != "ERROR") {
+				newurl = url + "/" + "underconstruction";
+			}
+		} else {
+			if (url != "ERROR") {
+				newurl = url + "/" + tabClicked + "/view";
+			}
+		}
+		callAjax(newurl, container, "GET");
+	}
 	
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='aplicableTestId'>Id</th><th class='testName'>Test Name</th><th class='roomName'>Room Name</th><th class='periodicity'>Periodicity</th><th class='location'>Location</th><th class='noOfCycle'>No Of Cycle</th><th class='creationDate'>Creation Date</th><th class='op'>Operation</th></tr></thead>";
@@ -285,7 +300,8 @@ $.each(roomData, function(key1, val1){
 				title : "Status",
 				message : "Successfully Added!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('room/applicabletestroom');
 		}
 	}
 
@@ -337,13 +353,15 @@ $.each(roomData, function(key1, val1){
 					title : "Status",
 					message : "Successfully Deleted!"
 				});
-				setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('room/applicabletestroom');
 		}catch(err){
 				$.growl({
 				title : "Status",
 				message : "Could not delete!"
 			});
-			setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('room/applicabletestroom');
 		}
 	}
 	function editEquipment(){
@@ -409,14 +427,16 @@ $.each(roomData, function(key1, val1){
 				title : "Status",
 				message : "Successfully updated!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('room/applicabletestroom');
 			}catch(err)
 			{
 				$.growl({
 				title : "Status",
 				message : "Unsuccessful!"
 			});
-			setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('room/applicabletestroom');
 			}
 		}
 	}

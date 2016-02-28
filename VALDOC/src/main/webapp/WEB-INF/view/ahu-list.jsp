@@ -260,6 +260,21 @@
 		});
 
 	});
+	
+function switchTab(tabClicked) {
+	var container = "box-inner";
+	var newurl = "";
+	if (tabClicked == "") {
+		if (url != "ERROR") {
+			newurl = url + "/" + "underconstruction";
+		}
+	} else {
+		if (url != "ERROR") {
+			newurl = url + "/" + tabClicked + "/view";
+		}
+	}
+	callAjax(newurl, container, "GET");
+}
 
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='ahuId'>Id</th><th class='ahuNo'>AHU No</th><th class='ahuType'>AHU Type</th><th class='capacity'>Capacity (Air Flow in cfm)</th><th class='returnAirCFM'>Return Air cfm</th><th class='exhaustAirCFM'>Exhaust Air cfm</th><th class='bleedFilterType'>Bleed filter Type</th><th class='bleedFilterEfficiency'>Bleed filter Efficiency</th><th class='bleedAirCFM'>Bleed Air Cfm</th><th class='bleedFilterQty'>Bleed Filter Qty</th><th class='bleedFilterSize'>Bleed Filter Size</th><th class='freshFilterType'>Fresh Filter Type</th><th class='freshAirCFM'>Fresh Air cfm</th><th class='freshFilterQty'>Fresh Filter Qty</th><th class='freshFilterSize'>Fresh Filter Size</th><th class='ahuHEPAFilterQty'>AHU HEPA Filter Qty</th><th class='hepaFilterEfficiency'>HEPA Filter efficiency</th><th class='hepaParticleSize'>HEPA Particle size</th><th class='hepaFilterSpecification'>HEPA Filter Specification (leak)</th><th class='createdDate'>Created Date</th><th class='op'>Operation</th></tr></thead>";
@@ -506,7 +521,8 @@
 				title : "Status",
 				message : "Successfully Added!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('ahu');
 		}
 	}
 
@@ -586,13 +602,15 @@ function cancelEdit() {
 					title : "Status",
 					message : "Successfully Deleted!"
 				});
-				setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('ahu');
 		}catch(err){
 				$.growl({
 				title : "Status",
 				message : "Could not delete!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('ahu');
 		}
 	}
 
@@ -738,14 +756,16 @@ function cancelEdit() {
 				title : "Status",
 				message : "Successfully updated!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('ahu');
 			}catch(err)
 			{
 				$.growl({
 				title : "Status",
 				message : "Unsuccessful!"
 			});
-			setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('ahu');
 			}
 		}
 	}

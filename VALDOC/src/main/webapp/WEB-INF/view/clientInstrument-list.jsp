@@ -174,6 +174,21 @@
 		});
 	});
 	
+	function switchTab(tabClicked) {
+		var container = "box-inner";
+		var newurl = "";
+		if (tabClicked == "") {
+			if (url != "ERROR") {
+				newurl = url + "/" + "underconstruction";
+			}
+		} else {
+			if (url != "ERROR") {
+				newurl = url + "/" + tabClicked + "/view";
+			}
+		}
+		callAjax(newurl, container, "GET");
+	}
+	
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='returnAirCFM'>Sl</th><th class='returnAirCFM'>Test Used</th><th class='returnAirCFM'>Instrument Sr. No</th><th class='returnAirCFM'>Instrument Used</th><th class='returnAirCFM'>Make</th><th class='returnAirCFM'>Model</th><th class='returnAirCFM'>Calibrated on</th><th class='returnAirCFM'>Calibration Due on</th><th class='exhaustAirCFM'>Current Location</th><th class='exhaustAirCFM'>Instrument Id</th><th class='bleedFilterType'>Status</th><th class='createdDate'>Created Date</th><th class='op'>Operation</th></tr></thead>";
 		$("#roomFilter").append(thead);
@@ -346,7 +361,8 @@
 			title : "Status",
 			message : "Successfully Added!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('clientInstrument');
 		}
 	}
 	
@@ -400,13 +416,15 @@
 			title : "Status",
 			message : "Successfully Deleted!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('clientInstrument');
 		}catch(err){
 			$.growl({
 			title : "Status",
 			message : "Could not delete!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('clientInstrument');
 		}
 }
 function cancelEdit() {
@@ -501,14 +519,16 @@ function editClientInstrument(){
 			title : "Status",
 			message : "Successfully updated!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('clientInstrument');
 		}catch(err)
 		{
 			$.growl({
 			title : "Status",
 			message : "Unsuccessful!"
 		});
-		setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('clientInstrument');
 		}
 	}
 }

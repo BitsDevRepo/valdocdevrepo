@@ -94,6 +94,21 @@
 		});
 
 	});
+	
+	function switchTab(tabClicked) {
+		var container = "box-inner";
+		var newurl = "";
+		if (tabClicked == "") {
+			if (url != "ERROR") {
+				newurl = url + "/" + "underconstruction";
+			}
+		} else {
+			if (url != "ERROR") {
+				newurl = url + "/" + tabClicked + "/view";
+			}
+		}
+		callAjax(newurl, container, "GET");
+	}
 
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='id'>Id</th><th class='name'>Area Name</th><th class='email'>Additional Details</th><th class='createdDate'>Created Date</th><th class='op'>Operation</th></tr></thead>";
@@ -191,7 +206,8 @@
 			title : "Status",
 			message : "Successfully Added!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('area');
 		}
 	}
 
@@ -229,13 +245,15 @@
 				title : "Status",
 				message : "Successfully Deleted!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('area');
 			}catch(err){
 				$.growl({
 				title : "Status",
 				message : "Could not delete!"
 			});
-			setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('area');
 			}
 	}
 	function cancelEdit() {
@@ -281,14 +299,16 @@
 				title : "Status",
 				message : "Successfully updated!"
 			});
-			setInterval('refreshPage()', 500);
+			setInterval(50000);
+			switchTab('area');
 			}catch(err)
 			{
 				$.growl({
 				title : "Status",
 				message : "Unsuccessful!"
 			});
-			setInterval('refreshPage()', 500);
+				setInterval(50000);
+				switchTab('area');
 			}
 			}
 	}

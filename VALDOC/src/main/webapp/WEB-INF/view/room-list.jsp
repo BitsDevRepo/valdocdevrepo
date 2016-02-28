@@ -469,6 +469,21 @@ $.each(areaData, function(key3, val3){
 		});
 	});
 	
+	function switchTab(tabClicked) {
+		var container = "box-inner";
+		var newurl = "";
+		if (tabClicked == "") {
+			if (url != "ERROR") {
+				newurl = url + "/" + "underconstruction";
+			}
+		} else {
+			if (url != "ERROR") {
+				newurl = url + "/" + tabClicked + "/view";
+			}
+		}
+		callAjax(newurl, container, "GET");
+	}
+	
 	function drawTable(data) {
 		var thead = "<thead><tr><th class='roomId'>Id</th><th class='ahuNo'>AHU No</th><th class='areaName'>Area</th><th class='roomName'>Room Name</th><th class='roomNo'>Room No</th><th class='width'>Width(Ft)</th><th class='length'>Length(Ft)</th><th class='height'>Height(Ft)</th><th class='area'>Area(Ft2)</th><th class='volume'>Volume(Ft3)</th><th class='freshFilterType'>ACPH (NLT)</th><th class='freshAirCFM'>Test Ref</th><th class='freshFilterQty'>ISO Clause</th><th class='freshFilterSize'>Occupancy State</th><th class='ahuHEPAFilterQty'>Room Supply Airflow (cfm)</th><th class='hepaFilterEfficiency'>AHU Flow (cfm)</th><th class='hepaParticleSize'>Room Pressure (Pa)</th><th class='hepaFilterSpecification'>Fresh Air (cfm) </th><th class='hepaFilterSpecification'>Bleed Air (cfm) </th><th class='exhaustAirCFM'>Exhaust Air (cfm)</th><th class='bleedFilterType'>Temp (°C)</th><th class='bleedFilterEfficiency'>RH%</th><th class='bleedAirCFM'>Return Air (cfm)</th><th class='bleedFilterQty'>Supply Air Grill Qty (Nos)</th><th class='bleedFilterSize'>Return Air Grill Qty (Nos)</th><th class='freshFilterType'>Supply Air Filter Qty (Nos)</th><th class='freshAirCFM'>Return Air Filter Qty (Nos)</th><th class='freshFilterQty'>Remarks</th><th class='createdDate'>Created Date</th><th class='op'>Operation</th></tr></thead>";
 		$("#room").append(thead);
@@ -592,69 +607,51 @@ $.each(areaData, function(key3, val3){
 	});
 
 	function saveMe() {
-
 		$('.add-user-container').hide();
 		$('.box-content').addClass('hide');
 		$('.addUser-content').removeClass('hide');
-
 		var errorCount=0;
 		var urlPerfix = fetchBackendUrl("config");
 		var urlMapping = urlPerfix + '/room' + "/" + 'create';
 		var rooms = {};
 		var ahus = {};
 		var areas = {};
-
 		var ahuNo = $('#ahuNo').find(":selected").val();
 		var areaName = $('#areaName').find(":selected").val();
-		var roomName = $('#roomName').val();
-		
+		var roomName = $('#roomName').val();		
 		var roomNo = $('#roomNo').val();
 		var width = $('#width').val();
-		var height = $('#height').val();
-		
+		var height = $('#height').val();		
 		var length = $('#length').val();
 		var area = $('#area').val();
-		var volume = $('#volume').val();
-		
+		var volume = $('#volume').val();		
 		var acphNLT = $('#acphNLT').val();
 		var testRef = $('#testRef').val();
-		var isoClause = $('#isoClause').val();
-		
+		var isoClause = $('#isoClause').val();		
 		var occupancyState = $('#occupancyState').val();
 		var roomSupplyAirflowCFM = $('#roomSupplyAirflowCFM').val();
-		var ahuFlowCFM = $('#ahuFlowCFM').val();
-		
+		var ahuFlowCFM = $('#ahuFlowCFM').val();		
 		var roomPressurePA = $('#roomPressurePA').val();
-		var freshAirCFM = $('#freshAirCFM').val();
-		
-		var bleedAirCFM = $('#bleedAirCFM').val();
-		
+		var freshAirCFM = $('#freshAirCFM').val();		
+		var bleedAirCFM = $('#bleedAirCFM').val();		
 		var exhaustAirCFM = $('#exhaustAirCFM').val();
 		var temperature = $('#temperature').val();
-		var rh = $('#rh').val();
-		
-		var returnAirCFM = $('#returnAirCFM').val();
-		
-		var supplyAirGrillQTY = $('#supplyAirGrillQTY').val();
-		
-		var returnAirGrillQTY = $('#returnAirGrillQTY').val();
-		
-		var supplyAirFilterQTY = $('#supplyAirFilterQTY').val();
-		
+		var rh = $('#rh').val();		
+		var returnAirCFM = $('#returnAirCFM').val();		
+		var supplyAirGrillQTY = $('#supplyAirGrillQTY').val();		
+		var returnAirGrillQTY = $('#returnAirGrillQTY').val();		
+		var supplyAirFilterQTY = $('#supplyAirFilterQTY').val();		
 		var returnAirFilterQTY = $('#returnAirFilterQTY').val();
-		var remarks = $('#remarks').val();
-		
+		var remarks = $('#remarks').val();		
 		//alert("New Values : "+ahuNo+"  : "+areaName +"  : "+roomName +"  : "+roomNo);
 		if (validate("roomName", "STRING")) {
 		} else {
 			errorCount++;
-		}
-		
+		}		
 		if (validate("height", "STRING")) {
 		} else {
 			errorCount++;
-		}
-		
+		}		
 		if (validate("length", "STRING")) {
 		} else {
 			errorCount++;
@@ -664,6 +661,75 @@ $.each(areaData, function(key3, val3){
 			errorCount++;
 		}
 		if (validate("acphNLT", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("roomNo", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("testRef", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("isoClause", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("occupancyState", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("roomSupplyAirflowCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("ahuFlowCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("roomPressurePA", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("freshAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("bleedAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("exhaustAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("temperature", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("rh", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("returnAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("supplyAirGrillQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("returnAirGrillQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("supplyAirFilterQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("returnAirFilterQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("remarks", "STRING")) {
 		} else {
 			errorCount++;
 		}
@@ -709,7 +775,8 @@ $.each(areaData, function(key3, val3){
 			title : "Status",
 			message : "Successfully Added!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('room');
 	}
 		
 	}
@@ -810,13 +877,16 @@ $.each(areaData, function(key3, val3){
 			title : "Status",
 			message : "Successfully Deleted!"
 		});
-		setInterval('refreshPage()', 500);
+		setInterval(50000);
+		switchTab('room');
 }catch(err){
 		$.growl({
 		title : "Status",
 		message : "Could not delete!"
 	});
-	setInterval('refreshPage()', 500);
+
+		setInterval(50000);
+		switchTab('room');
 }
 }
 	function cancelEdit() {
@@ -827,7 +897,6 @@ $.each(areaData, function(key3, val3){
 	}
 
 	function editEquipment(){
-	
 		errorCount=0;
 		var urlPerfix = fetchBackendUrl("config");
 		var urlMapping = urlPerfix + '/room' + "/" + 'update';
@@ -899,11 +968,80 @@ $.each(areaData, function(key3, val3){
 		} else {
 			errorCount++;
 		}
+		if (validate("editroomNo", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editacphNLT", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editroomNo", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("edittestRef", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("editisoClause", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editoccupancyState", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editroomSupplyAirflowCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("editahuFlowCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("editroomPressurePA", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("editfreshAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editbleedAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editexhaustAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("edittemperature", "STRING")) {
+		} else {
+			errorCount++;
+		}		
 		if (validate("editrh", "STRING")) {
 		} else {
 			errorCount++;
 		}
-		if (validate("acphNLT", "STRING")) {
+		if (validate("editreturnAirCFM", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editsupplyAirGrillQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}
+		if (validate("editreturnAirGrillQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}if (validate("editsupplyAirFilterQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("editreturnAirFilterQTY", "STRING")) {
+		} else {
+			errorCount++;
+		}		
+		if (validate("editremarks", "STRING")) {
 		} else {
 			errorCount++;
 		}
@@ -949,14 +1087,18 @@ $.each(areaData, function(key3, val3){
 				title : "Status",
 				message : "Successfully updated!"
 			});
-			setInterval('refreshPage()', 500);
+
+			setInterval(50000);
+			switchTab('room');
 			}catch(err)
 			{
 				$.growl({
 				title : "Status",
 				message : "Unsuccessful!"
 			});
-			setInterval('refreshPage()', 500);
+
+				setInterval(50000);
+				switchTab('room');
 			}
 		}
 	}
